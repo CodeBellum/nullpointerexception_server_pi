@@ -20,6 +20,10 @@ io.on('connection', function(socket){
       console.log('user disconnected');
     });
 
+    socket.on('change', function(data) {
+        io.emit('changed', data);
+      });
+
     socket.on('disconnect', function(){
       console.log('user disconnected');
     });  
@@ -28,3 +32,15 @@ io.on('connection', function(socket){
 http.listen(3000, function(){
   console.log('listening on *:3000');
 });
+
+var sample_json = [
+    {i: 0, v: 0},
+    {i: 1, v: 1},
+    {i: 2, v: 2},
+    {i: 3, v: 3},
+    {i: 4, v: 4},
+];
+
+setInterval(function(){
+    io.emit('changed', sample_json);
+}, 2000);

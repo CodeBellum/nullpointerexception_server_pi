@@ -1,5 +1,17 @@
 script(src="/socket.io/socket.io.js")
+script(src="https://code.jquery.com/jquery-3.4.1.min.js"
+  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+  crossorigin="anonymous")
 script.
   var socket = io();
+  socket.on('changed', function(data){
+      var parsed = '';
+      data.forEach(function(el){
+          parsed += '{ i: ' + el.i + '; v: '+el.v+' } '
+      });
+
+      $('#data').text(parsed);
+  });
 
 h1 IT WORKS!
+div#data 
