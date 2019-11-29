@@ -3,3 +3,41 @@ body {
     background-repeat: no-repeat;
     background-color: black;
   }
+
+  tr {
+    height: 80px;
+    padding-bottom: 70px;
+    display: block;
+  }
+  
+  td {
+    width: 80px;
+    height: 80px;
+    margin-right: 70px;
+    display: inline-block;
+  }
+
+  .data {
+      padding-left: 150px;
+      padding-top: 120px;
+  }
+
+  .red {
+    background-color: red;
+  }
+
+  .green {
+    background-color: green;
+  }
+
+  .blue {
+    background-color: blue;
+  }
+
+  .yellow {
+    background-color: yellow;
+  }
+
+  .transparent {
+    background-color: transparent;
+  }

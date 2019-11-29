@@ -27,6 +27,8 @@ io.on('connection', function(socket){
     socket.on('disconnect', function(){
       console.log('user disconnected');
     });  
+
+    io.emit('changed', generateRandom());
   });
 
 http.listen(3000, function(){
@@ -41,6 +43,14 @@ var sample_json = [
     {i: 4, v: 4},
 ];
 
-setInterval(function(){
-    io.emit('changed', sample_json);
-}, 2000);
+/* setInterval(function(){
+    io.emit('changed', generateRandom());
+}, 16); */
+
+function generateRandom(){
+    var arr = [];
+    for (let index = 0; index < 20; index++) {
+      arr.push({i: index, v: Math.floor(Math.random() * 5)})
+    }
+    return arr;
+}
