@@ -21,26 +21,26 @@ var insToPort = [
 ];
 
 var portToGPIO = [
-  {i: 0, p: 0},
-  {i: 1, p: 0},
-  {i: 2, p: 0},
-  {i: 3, p: 0},
-  {i: 4, p: 0},
-  {i: 5, p: 0},
-  {i: 6, p: 0},
-  {i: 7, p: 0},
-  {i: 8, p: 0},
-  {i: 9, p: 0},
-  {i: 10, p: 0},
-  {i: 11, p: 0},
-  {i: 12, p: 0},
-  {i: 13, p: 0},
-  {i: 14, p: 0},
-  {i: 15, p: 0},
-  {i: 16, p: 0},
-  {i: 17, p: 0},
-  {i: 18, p: 0},
-  {i: 19, p: 0},
+  {i: 0, p: 2},
+  {i: 1, p: 3},
+  {i: 2, p: 4},
+  {i: 3, p: 9},
+  {i: 4, p: 11},
+  {i: 5, p: 6},
+  {i: 6, p: 13},
+  {i: 7, p: 19},
+  {i: 8, p: 26},
+  {i: 9, p: 14},
+  {i: 10, p: 15},
+  {i: 11, p: 18},
+  {i: 12, p: 23},
+  {i: 13, p: 24},
+  {i: 14, p: 25},
+  {i: 15, p: 8},
+  {i: 16, p: 12},
+  {i: 17, p: 16},
+  {i: 18, p: 20},
+  {i: 19, p: 21},
 ];
 
 app.get('/', function (req, res){
@@ -55,9 +55,13 @@ io.on('connection', function(socket){
 
     socket.on('change', function(data) {
         io.emit('changed', data, insToPort);
-        /*data.forEach(element => {
-           exec('python pi.py  1'); 
-        });*/        
+        data.forEach(element => {
+          var ports = getPorts(element.i, insToPort);
+          ports.forEach(elem => {
+            var gpio = getGPIOPort(elem, portToGPIO);
+            exec('python pi.py ' + gpio + ' ' + element.v);
+          });
+        });        
       });
 
     socket.on('disconnect', function(){
@@ -66,6 +70,28 @@ io.on('connection', function(socket){
 
     //io.emit('changed', sample_json, insToPort);
   });
+
+function getPorts(id, portsMapping){
+  var result = [];
+  
+  portsMapping.forEach(el => {
+    if (el.i == id)
+    result = el.ports;
+  });
+
+  return result;
+}  
+
+function getGPIOPort(id, mapping) {
+  var result = -1;
+  mapping.forEach(el => {
+    if (el.i == id) {
+      result = el.p;
+    }
+  })
+
+  return result;
+}
 
 http.listen(3000, function(){
   console.log('listening on *:3000');
