@@ -18,5 +18,5 @@ if __name__ == "__main__":
     dataOff = json.loads(sys.argv[2])
     if len(dataOn) > 0:
         light(dataOn, 1)
-    if len(dataOff) > 0
+    if len(dataOff) > 0:
         light(dataOff, 0)
