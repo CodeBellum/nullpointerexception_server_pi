@@ -5,16 +5,16 @@ body {
   }
 
   tr {
-    height: 80px;
-    padding-bottom: 70px;
+    height: 100px;
+    padding-bottom: 100px;
     display: block;
   }
   
   td {
-    width: 80px;
-    height: 80px;
-    margin-right: 70px;
-    line-height: 80px;
+    width: 100px;
+    height: 100px;
+    margin-right: 100px;
+    line-height: 100px;
     display: inline-block;
     text-align: center;
   }
