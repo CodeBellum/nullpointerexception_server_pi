@@ -1,18 +1,16 @@
 import sys
 import json
 
-import RPi.GPIO as GPIO
-import time
+import gpiozero
+from gpiozero import LED
 
 def light(data):
-    GPIO.setwarnings(False)
-    GPIO.setmode(GPIO.BCM)
     for el in data:
-        light_one(el['i'], el['v'])
-
-def light_one(index, value):
-    GPIO.setup(index, GPIO.OUT)    
-    GPIO.output(index, GPIO.HIGH if value == 1 else GPIO.LOW)
+        led = LED(el[i])
+        if el['v'] == 1: 
+            led.on()
+        else: 
+            led.off()
 
 if __name__ == "__main__":
     data=json.loads(sys.argv[1])
