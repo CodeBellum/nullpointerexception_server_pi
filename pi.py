@@ -2,16 +2,18 @@ import sys
 import json
 
 import gpiozero
-from gpiozero import LED
+from gpiozero import LEDBoard
 
-def light(data):
-    for el in data:
-        led = LED(el[i])
-        if el['v'] == 1: 
-            led.on()
-        else: 
-            led.off()
+def light(data, enable):
+    led = LEDBoard(data)
+    if enable == 1: 
+        led.on()
+    else: 
+        led.off()
+    sleep(0.1)
 
 if __name__ == "__main__":
-    data=json.loads(sys.argv[1])
-    light(data)
+    dataOn = json.loads(sys.argv[1])
+    dataOff = json.loads(sys.argv[2])
+    light(dataOn, 1)
+    light(dataOff, 0)

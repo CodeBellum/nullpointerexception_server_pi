@@ -55,16 +55,22 @@ io.on('connection', function(socket){
 
     socket.on('change', function(data) {
         io.emit('changed', data, insToPort);
-        var gpioArr = [];
+        var gpioArrOn = [];
+        var gpioArrOff = [];
         data.forEach(element => {
           var ports = getPorts(element.i, insToPort);
           ports.forEach(elem => {
             var gpio = getGPIOPort(elem, portToGPIO);
-            gpioArr.push({i: gpio, v: element.v});
+            if (element.v == 1) {
+              gpioArrOn.push(gpio);
+            } else {
+              gpioArrOff.push(gpio);
+            }
+            //gpioArr.push({i: gpio, v: element.v});
             //exec('python pi.py ' + gpio + ' ' + element.v);
           });
         });
-        exec('python pi.py ' + JSON.stringify(gpioArr));        
+        exec('python pi.py ' + JSON.stringify(gpioArrOn) + ' ' + JSON.stringify(gpioArrOff));        
       });
 
     socket.on('disconnect', function(){
